@@ -15,10 +15,7 @@ function boxcreate(tagtarget, theboxwidth, theboxheight,boxcolor){
     headerdiv.style.height = theboxheight;
     headerdiv.style.width = theboxwidth;  
 }
-// var headerdiv = document.getElementById('header');
-// headerdiv.style.backgroundColor = 'blue';
-// headerdiv.style.color = 'white';
-// headerdiv.style.fontSize = '20px';
+
 //header area creation
 tagtarget = "header";
 boxcreate(tagtarget,'80%','80px','blue');
@@ -32,9 +29,7 @@ timerarea.style.width = theboxwidth;
 timerarea.innerHTML= 'countdown: ' + timercount;
 timerarea.style.color = 'white';
 timerarea.style.backgroundColor = 'orange';
-// var para2 = document.createElement('p');
-// para2.textContent = timercount;
-// questarea.appendChild(para2);
+
 //start button needs it's event listener
 mainEl.appendChild(timerarea);
 var startBtn = document.createElement('button');
@@ -48,8 +43,7 @@ startBtn.style.fontSize = "45px";
 mainEl.appendChild(startBtn);
 startBtn.addEventListener("click", gamestart);
 
-//this box create created problems in trying to put the buttons in their own section
-//boxcreate(tagtarget = 'timer','60px','60px','green');
+
 
 //the area for the question
 var questarea = document.createElement('section');
@@ -60,20 +54,17 @@ questarea.innerHTML = questtext;
 questarea.appendChild(para);
 mainEl.appendChild(questarea);
 questarea.style.textAlign = 'center';
-//questarea.style.display = 'flex';
-//questarea.style.alignContent = 'center';
-//questarea.style.display = 'flex';
-//questarea.style.flexDirection = 'row';
+
 questarea.style.margin = '80px';
 questarea.style.width = '100%';
 
 
 
 
-//tagtarget ="quest-section";
+
 boxcreate(tagtarget = "quest-section", theboxwidth = '80%', '100px', 'black');
 
-//var arr = ["John", "Mark", "Jeff", "Harry"];
+
 
 var refcount = 0;
 var questarray = [
@@ -116,7 +107,7 @@ questarea.innerHTML = 'The question will be here.  Ready to start?';
 function gamestart(){
     //first we have to populate the questions
     
-    startBtn.removeEventListener("click", gamestart, false);
+    startBtn.removeEventListener("click", gamestart);
     startBtn.remove();
     for (let i = 0; i < questarray[refcount].choices.length; i++) {
         var btn = document.createElement("button");
@@ -142,7 +133,7 @@ function gamestart(){
     function choicesFunc(e) {
         document.querySelector(".main").innerHTML = ""
         refcount++
-        displQuest()
+        // displQuest()
         var element = e.target.innerHTML;
         if(element === questarray[refcount].answer) {
             console.log("correct");
@@ -154,21 +145,5 @@ function gamestart(){
     
     questarea.addEventListener("click", choicesFunc);
 }
-
-// for (let i = 0; i < questarray[refcount].choices.length; i++) {
-//     var btn = document.createElement("button");
-//     btn.setAttribute("class", "btn");
-//     btn.style.margin = "10px";
-//     btn.style.color = textcolor;
-//     btn.style.backgroundColor = boxcolor;
-//     btn.style.display = 'flex';
-//     btn.style.width = '60%';
-//     btn.style.height = '50px'
-//     btn.style.justifyContent = 'center';
-//     btn.style.alignItems = 'center';
-//     btn.innerHTML = questarray[refcount].choices[i];
-//     questarea.appendChild(btn);
-// }
-
 
 
