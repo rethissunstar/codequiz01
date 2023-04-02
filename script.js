@@ -7,6 +7,7 @@ var textcolor = 'gold';
 var theboxwidth = '300px';
 var theboxheight = '80px';
 var timercount = 30;
+var clickTrue = false;
 function boxcreate(tagtarget, theboxwidth, theboxheight,boxcolor){
     var headerdiv = document.getElementById(tagtarget);
     headerdiv.style.backgroundColor = boxcolor;
@@ -110,6 +111,65 @@ function gamestart(){
     startBtn.removeEventListener("click", gamestart);
     startBtn.remove();
 
+
+
+//time to setup the iteration test
+var questamount = questarray.length;
+
+// looping test
+for (a=0; a<questamount; a++){
+
+    if (clickTrue == false){
+        clickTrue = true;
+        console.log("test the iterations " +a);
+        //document.querySelector(".main").innerHTML = "";  //this is a clear all!!!!
+        var quest = questarray[a].question;
+        questarea.innerHTML = quest;
+    
+        function choicesFunc(e) {
+        
+        
+        
+            // displQuest()
+            var element = e.target.innerHTML;
+            if(element === questarray[refcount].answer) {  
+                console.log("correct");
+                clearTimeout(mytimeOut,35000);
+                clickTrue = false;
+            } else {
+                console.log("incorrect");
+                clearTimeout(mytimeOut,35000);
+                clickTrue = false;
+            }
+            console.log("ELEMENT: ", element);
+            refcount++;
+            
+        }
+    
+    
+    
+        for (let i = 0; i < questarray[refcount].choices.length; i++) {
+            var btn = document.createElement("button");
+            btn.setAttribute("class", "btn");
+            btn.style.margin = "10px";
+            btn.style.color = textcolor;
+            btn.style.backgroundColor = boxcolor;
+            btn.style.display = 'flex';
+            btn.style.width = '60%';
+            btn.style.height = '50px'
+            btn.style.justifyContent = 'center';
+            btn.style.alignItems = 'center';
+            btn.innerHTML = questarray[refcount].choices[i];
+            questarea.appendChild(btn);
+        }
+        
+        questarea.addEventListener("click", choicesFunc);
+        const mytimeOut = setTimeout(choicesFunc, 35000);
+    }
+
+    }
+   
+
 //this is starting the timer
 function setTime(){
     var timerInterval = setInterval(function (){
@@ -136,49 +196,44 @@ function setTime(){
 //call of the timer function
 setTime();
 
-//time to setup the iteration test
-var questamount = questarray.length;
-
-
-
 //Success.  Now we need to get this into a for loop and set the
 
-function choicesFunc(e) {
-    document.querySelector(".main").innerHTML = ""
+// function choicesFunc(e) {
     
     
-    // displQuest()
-    var element = e.target.innerHTML;
-    if(element === questarray[refcount].answer) {  //NOTE REFCOUNT WILL BE WRONG FOR NOW.
-        console.log("correct");
-        clearTimeout(mytimeOut,35000);
-    } else {
-        console.log("incorrect");
-        clearTimeout(mytimeOut,35000);
-    }
-    console.log("ELEMENT: ", element);
-    refcount++
-}
+    
+//     // displQuest()
+//     var element = e.target.innerHTML;
+//     if(element === questarray[refcount].answer) {  
+//         console.log("correct");
+//         clearTimeout(mytimeOut,35000);
+//     } else {
+//         console.log("incorrect");
+//         clearTimeout(mytimeOut,35000);
+//     }
+//     console.log("ELEMENT: ", element);
+//     refcount++
+// }
 
-questarea.addEventListener("click", choicesFunc);
+// questarea.addEventListener("click", choicesFunc);
 
-const mytimeOut = setTimeout(choicesFunc, 35000);
+// const mytimeOut = setTimeout(choicesFunc, 35000);
 
 //this for loop generates the buttons.  This needs tobe moved into the iterative. Once that is tested.
-    for (let i = 0; i < questarray[refcount].choices.length; i++) {
-        var btn = document.createElement("button");
-        btn.setAttribute("class", "btn");
-        btn.style.margin = "10px";
-        btn.style.color = textcolor;
-        btn.style.backgroundColor = boxcolor;
-        btn.style.display = 'flex';
-        btn.style.width = '60%';
-        btn.style.height = '50px'
-        btn.style.justifyContent = 'center';
-        btn.style.alignItems = 'center';
-        btn.innerHTML = questarray[refcount].choices[i];
-        questarea.appendChild(btn);
-    }
+    // for (let i = 0; i < questarray[refcount].choices.length; i++) {
+    //     var btn = document.createElement("button");
+    //     btn.setAttribute("class", "btn");
+    //     btn.style.margin = "10px";
+    //     btn.style.color = textcolor;
+    //     btn.style.backgroundColor = boxcolor;
+    //     btn.style.display = 'flex';
+    //     btn.style.width = '60%';
+    //     btn.style.height = '50px'
+    //     btn.style.justifyContent = 'center';
+    //     btn.style.alignItems = 'center';
+    //     btn.innerHTML = questarray[refcount].choices[i];
+    //     questarea.appendChild(btn);
+    // }
     
    
     // function choicesFunc(e) {
