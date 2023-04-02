@@ -116,7 +116,90 @@ function gamestart(){
 //time to setup the iteration test
 var questamount = questarray.length;
 
-// looping test
+// // looping test
+// for (a=0; a<questamount; a++){
+//     // document.querySelector(".main").innerHTML = "";  //this is a clear all!!!!
+//     if (clickTrue == false){
+//         clickTrue = true;
+//         console.log("test the iterations " +a);
+//         //document.querySelector(".main").innerHTML = "";  //this is a clear all!!!!
+//         var quest = questarray[a].question;
+//         questarea.innerHTML = quest;
+
+
+//         for (let i = 0; i < questarray[refcount].choices.length; i++) {
+//             var btn = document.createElement("button");
+//             btn.setAttribute("class", "btn");
+//             btn.style.margin = "10px";
+//             btn.style.color = textcolor;
+//             btn.style.backgroundColor = boxcolor;
+//             btn.style.display = 'flex';
+//             btn.style.width = '60%';
+//             btn.style.height = '50px'
+//             btn.style.justifyContent = 'center';
+//             btn.style.alignItems = 'center';
+//             btn.innerHTML = questarray[refcount].choices[i];
+//             questarea.appendChild(btn);
+//         }
+        
+//         questarea.addEventListener("click", choicesFunc);
+//         //const mytimeOut = setTimeout(choicesFunc, 35000);
+    
+    
+//         function choicesFunc(e) {
+        
+
+          
+        
+//             // displQuest()
+//             var element = e.target.innerHTML;
+//             if(element === questarray[refcount].answer) {  
+//                 console.log("correct");
+//                 //clearTimeout(mytimeOut,35000);
+//                 clickTrue = false;
+                
+//             } else {
+//                 console.log("incorrect");
+//                 //clearTimeout(mytimeOut,35000);
+//                 clickTrue = false;
+               
+//             }
+//             console.log("ELEMENT: ", element);
+//             refcount++;
+            
+//         }
+    
+    
+    
+//         // for (let i = 0; i < questarray[refcount].choices.length; i++) {
+//         //     var btn = document.createElement("button");
+//         //     btn.setAttribute("class", "btn");
+//         //     btn.style.margin = "10px";
+//         //     btn.style.color = textcolor;
+//         //     btn.style.backgroundColor = boxcolor;
+//         //     btn.style.display = 'flex';
+//         //     btn.style.width = '60%';
+//         //     btn.style.height = '50px'
+//         //     btn.style.justifyContent = 'center';
+//         //     btn.style.alignItems = 'center';
+//         //     btn.innerHTML = questarray[refcount].choices[i];
+//         //     questarea.appendChild(btn);
+//         // }
+        
+//         // questarea.addEventListener("click", choicesFunc);
+//         // //const mytimeOut = setTimeout(choicesFunc, 35000);
+//     }
+
+//     }
+   
+
+//this is starting the timer
+function setTime(){
+    var timerInterval = setInterval(function (){
+        timercount--;
+        timerarea.innerHTML= 'countdown: ' + timercount;  
+        if(timercount != 0){
+          // looping test
 for (a=0; a<questamount; a++){
     // document.querySelector(".main").innerHTML = "";  //this is a clear all!!!!
     if (clickTrue == false){
@@ -190,24 +273,31 @@ for (a=0; a<questamount; a++){
         // //const mytimeOut = setTimeout(choicesFunc, 35000);
     }
 
-    }
-   
+    } 
 
-//this is starting the timer
-function setTime(){
-    var timerInterval = setInterval(function (){
-        timercount--;
-        timerarea.innerHTML= 'countdown: ' + timercount;
+        }
+        else {
 
-        if(timercount == 0){
             clearInterval(timerInterval);
-            for(a =0; a <4; a++){
+            for(var c =0; c <4; c++){
                 btn.remove();
-            }
-            questarea.removeEventListener("click", choicesFunc);
+                questarea.removeEventListener("click", choicesFunc);
             questarea.innerHTML = "Game Over";
             //clearTimeout(mytimeOut,35000);
+            }
+
+            
+            
+
+
+
+
+
+            
         }
+        
+
+      
     }
 
        , 1000);
