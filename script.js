@@ -121,8 +121,9 @@ function setTime(){
             for(a =0; a <4; a++){
                 btn.remove();
             }
-            
+            questarea.removeEventListener("click", choicesFunc);
             questarea.innerHTML = "Game Over";
+            clearTimeout(mytimeOut,35000);
         }
     }
 
@@ -139,26 +140,21 @@ setTime();
 var questamount = questarray.length;
 
 
-function questpop(){
-    console.log("questpop is happening ")
-    
-        
-    
-    
-}
+
+//Success.  Now we need to get this into a for loop and set the
 
 function choicesFunc(e) {
     document.querySelector(".main").innerHTML = ""
     
-    clearTimeout(questpop,30000);
+    
     // displQuest()
     var element = e.target.innerHTML;
     if(element === questarray[refcount].answer) {  //NOTE REFCOUNT WILL BE WRONG FOR NOW.
         console.log("correct");
-        clearTimeout(questpop,30000);
+        clearTimeout(mytimeOut,35000);
     } else {
         console.log("incorrect");
-        clearTimeout(questpop,30000);
+        clearTimeout(mytimeOut,35000);
     }
     console.log("ELEMENT: ", element);
     refcount++
@@ -166,7 +162,7 @@ function choicesFunc(e) {
 
 questarea.addEventListener("click", choicesFunc);
 
-setTimeout(choicesFunc, 3000);
+const mytimeOut = setTimeout(choicesFunc, 35000);
 
 //this for loop generates the buttons.  This needs tobe moved into the iterative. Once that is tested.
     for (let i = 0; i < questarray[refcount].choices.length; i++) {
