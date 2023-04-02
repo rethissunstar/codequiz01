@@ -135,6 +135,38 @@ function setTime(){
 //call of the timer function
 setTime();
 
+//time to setup the iteration test
+var questamount = questarray.length;
+
+
+function questpop(){
+    console.log("questpop is happening ")
+    
+        
+    
+    
+}
+
+function choicesFunc(e) {
+    document.querySelector(".main").innerHTML = ""
+    
+    clearTimeout(questpop,30000);
+    // displQuest()
+    var element = e.target.innerHTML;
+    if(element === questarray[refcount].answer) {  //NOTE REFCOUNT WILL BE WRONG FOR NOW.
+        console.log("correct");
+        clearTimeout(questpop,30000);
+    } else {
+        console.log("incorrect");
+        clearTimeout(questpop,30000);
+    }
+    console.log("ELEMENT: ", element);
+    refcount++
+}
+
+questarea.addEventListener("click", choicesFunc);
+
+setTimeout(choicesFunc, 3000);
 
 //this for loop generates the buttons.  This needs tobe moved into the iterative. Once that is tested.
     for (let i = 0; i < questarray[refcount].choices.length; i++) {
@@ -152,26 +184,21 @@ setTime();
         questarea.appendChild(btn);
     }
     
-    if (timercount> 0){
-
-
-
-        
-    }
-    function choicesFunc(e) {
-        document.querySelector(".main").innerHTML = ""
-        refcount++
-        // displQuest()
-        var element = e.target.innerHTML;
-        if(element === questarray[refcount].answer) {
-            console.log("correct");
-        } else {
-            console.log("incorrect")
-        }
-        console.log("ELEMENT: ", element);
-    }
+   
+    // function choicesFunc(e) {
+    //     document.querySelector(".main").innerHTML = ""
+    //     refcount++
+    //     // displQuest()
+    //     var element = e.target.innerHTML;
+    //     if(element === questarray[refcount].answer) {
+    //         console.log("correct");
+    //     } else {
+    //         console.log("incorrect")
+    //     }
+    //     console.log("ELEMENT: ", element);
+    // }
     
-    questarea.addEventListener("click", choicesFunc);
+    // questarea.addEventListener("click", choicesFunc);
 }
 
 
