@@ -118,36 +118,15 @@ var questamount = questarray.length;
 
 // looping test
 for (a=0; a<questamount; a++){
-
+    // document.querySelector(".main").innerHTML = "";  //this is a clear all!!!!
     if (clickTrue == false){
         clickTrue = true;
         console.log("test the iterations " +a);
         //document.querySelector(".main").innerHTML = "";  //this is a clear all!!!!
         var quest = questarray[a].question;
         questarea.innerHTML = quest;
-    
-        function choicesFunc(e) {
-        
-        
-        
-            // displQuest()
-            var element = e.target.innerHTML;
-            if(element === questarray[refcount].answer) {  
-                console.log("correct");
-                clearTimeout(mytimeOut,35000);
-                clickTrue = false;
-            } else {
-                console.log("incorrect");
-                clearTimeout(mytimeOut,35000);
-                clickTrue = false;
-            }
-            console.log("ELEMENT: ", element);
-            refcount++;
-            
-        }
-    
-    
-    
+
+
         for (let i = 0; i < questarray[refcount].choices.length; i++) {
             var btn = document.createElement("button");
             btn.setAttribute("class", "btn");
@@ -164,7 +143,51 @@ for (a=0; a<questamount; a++){
         }
         
         questarea.addEventListener("click", choicesFunc);
-        const mytimeOut = setTimeout(choicesFunc, 35000);
+        //const mytimeOut = setTimeout(choicesFunc, 35000);
+    
+    
+        function choicesFunc(e) {
+        
+
+          
+        
+            // displQuest()
+            var element = e.target.innerHTML;
+            if(element === questarray[refcount].answer) {  
+                console.log("correct");
+                //clearTimeout(mytimeOut,35000);
+                clickTrue = false;
+                
+            } else {
+                console.log("incorrect");
+                //clearTimeout(mytimeOut,35000);
+                clickTrue = false;
+               
+            }
+            console.log("ELEMENT: ", element);
+            refcount++;
+            
+        }
+    
+    
+    
+        // for (let i = 0; i < questarray[refcount].choices.length; i++) {
+        //     var btn = document.createElement("button");
+        //     btn.setAttribute("class", "btn");
+        //     btn.style.margin = "10px";
+        //     btn.style.color = textcolor;
+        //     btn.style.backgroundColor = boxcolor;
+        //     btn.style.display = 'flex';
+        //     btn.style.width = '60%';
+        //     btn.style.height = '50px'
+        //     btn.style.justifyContent = 'center';
+        //     btn.style.alignItems = 'center';
+        //     btn.innerHTML = questarray[refcount].choices[i];
+        //     questarea.appendChild(btn);
+        // }
+        
+        // questarea.addEventListener("click", choicesFunc);
+        // //const mytimeOut = setTimeout(choicesFunc, 35000);
     }
 
     }
@@ -183,7 +206,7 @@ function setTime(){
             }
             questarea.removeEventListener("click", choicesFunc);
             questarea.innerHTML = "Game Over";
-            clearTimeout(mytimeOut,35000);
+            //clearTimeout(mytimeOut,35000);
         }
     }
 
