@@ -105,10 +105,38 @@ textcolor = 'white';
 questarea.innerHTML = 'The question will be here.  Ready to start?';
 
 function gamestart(){
-    //first we have to populate the questions
+    //first we have to remove the event listener and the start button
     
     startBtn.removeEventListener("click", gamestart);
     startBtn.remove();
+
+//this is starting the timer
+function setTime(){
+    var timerInterval = setInterval(function (){
+        timercount--;
+        timerarea.innerHTML= 'countdown: ' + timercount;
+
+        if(timercount == 0){
+            clearInterval(timerInterval);
+            for(a =0; a <4; a++){
+                btn.remove();
+            }
+            
+            questarea.innerHTML = "Game Over";
+        }
+    }
+
+       , 1000);
+    
+
+
+}
+
+//call of the timer function
+setTime();
+
+
+//this for loop generates the buttons.  This needs tobe moved into the iterative. Once that is tested.
     for (let i = 0; i < questarray[refcount].choices.length; i++) {
         var btn = document.createElement("button");
         btn.setAttribute("class", "btn");
