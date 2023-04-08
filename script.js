@@ -8,7 +8,7 @@ var theboxwidth = '300px';
 var theboxheight = '80px';
 var timercount = 30;
 var clickTrue = false;
-function boxcreate(tagtarget, theboxwidth, theboxheight,boxcolor){
+function boxcreate(tagtarget, theboxwidth, theboxheight,boxcolor, textcolor){
     var headerdiv = document.getElementById(tagtarget);
     headerdiv.style.backgroundColor = boxcolor;
     headerdiv.style.color = textcolor;
@@ -48,7 +48,7 @@ startBtn.addEventListener("click", gamestart);
 
 //the area for the question
 var questarea = document.createElement('section');
-questarea.setAttribute("id", "quest-section")
+questarea.setAttribute("id", "quest-section");
 var para = document.createElement('p');
 var questtext = "this is where a question goes in";
 questarea.innerHTML = questtext;
@@ -63,9 +63,52 @@ questarea.style.width = '100%';
 
 
 
-boxcreate(tagtarget = "quest-section", theboxwidth = '80%', '100px', 'black');
+boxcreate(tagtarget = "quest-section", theboxwidth = '80%', '100px', 'black', 'white');
 
+var scorearea = document.createElement('section');
+var Score = 0;
+var hiScore = [{
+    Place: "First ",
+    naMe: "",
+    Scorehigh: "0"
+},{
+    Place: "Second ",
+    naMe: "",
+    Scorehigh: "0"
+}
+,{
+    Place: "Third ",
+    naMe: "",
+    Scorehigh: "0"
+}
+];
+localStorage.setItem("Score", Score);
+mainEl.appendChild(scorearea);
 
+scorearea.setAttribute('id', "Score");
+scorearea.style.display = 'flex';
+scorearea.style.flex = "wrap";
+scorearea.style.color = "white";
+scorearea.style.justifyContent = "center";
+scorearea.style.alignContent = "center";
+
+scorearea.innerHTML = "Score: " + Score;
+
+function highScoregen(){
+    var highScorearea = document.createElement('section');
+    highScorearea.setAttribute('id','Scoreboard');
+    
+    highScorearea.style.fontSize = '20pt';
+    if (hiScore[1].Scorehigh == "0"){
+        highScorearea.innerHTML = "No High Scores";
+    }
+    else {
+        highScorearea.innerHTML = "This is a test";
+    }
+    questarea.appendChild(highScorearea);
+    boxcreate(tagtarget = "Scoreboard", '80%', '200px', 'white', 'green');
+}
+boxcreate(tagtarget = "Score", '200px', '100px', 'blue');
 
 var refcount = 0;
 var questarray = [
@@ -96,7 +139,7 @@ var questarray = [
     },
    
 ]
-
+var i=0; 
 var answerarea = document.createElement('section');
 answerarea.setAttribute('id', 'answers');
 boxcolor = 'green';
@@ -104,109 +147,28 @@ textcolor = 'white';
 
 //this is the starting screen
 questarea.innerHTML = 'The question will be here.  Ready to start?';
-
+var timerInterval;
 function gamestart(){
     //first we have to remove the event listener and the start button
     
     startBtn.removeEventListener("click", gamestart);
     startBtn.remove();
-
-
-
-//time to setup the iteration test
-var questamount = questarray.length;
-
-// looping test
-for (a=0; a<questamount; a++){
-    // document.querySelector(".main").innerHTML = "";  //this is a clear all!!!!
-    if (clickTrue == false){
-        clickTrue = true;
-        console.log("test the iterations " +a);
-        //document.querySelector(".main").innerHTML = "";  //this is a clear all!!!!
-        var quest = questarray[a].question;
-        questarea.innerHTML = quest;
-
-
-        for (let i = 0; i < questarray[refcount].choices.length; i++) {
-            var btn = document.createElement("button");
-            btn.setAttribute("class", "btn");
-            btn.style.margin = "10px";
-            btn.style.color = textcolor;
-            btn.style.backgroundColor = boxcolor;
-            btn.style.display = 'flex';
-            btn.style.width = '60%';
-            btn.style.height = '50px'
-            btn.style.justifyContent = 'center';
-            btn.style.alignItems = 'center';
-            btn.innerHTML = questarray[refcount].choices[i];
-            questarea.appendChild(btn);
-        }
-        
-        questarea.addEventListener("click", choicesFunc);
-        //const mytimeOut = setTimeout(choicesFunc, 35000);
-    
-    
-        function choicesFunc(e) {
-        
-
-          
-        
-            // displQuest()
-            var element = e.target.innerHTML;
-            if(element === questarray[refcount].answer) {  
-                console.log("correct");
-                //clearTimeout(mytimeOut,35000);
-                clickTrue = false;
-                
-            } else {
-                console.log("incorrect");
-                //clearTimeout(mytimeOut,35000);
-                clickTrue = false;
-               
-            }
-            console.log("ELEMENT: ", element);
-            refcount++;
-            
-        }
-    
-    
-    
-        // for (let i = 0; i < questarray[refcount].choices.length; i++) {
-        //     var btn = document.createElement("button");
-        //     btn.setAttribute("class", "btn");
-        //     btn.style.margin = "10px";
-        //     btn.style.color = textcolor;
-        //     btn.style.backgroundColor = boxcolor;
-        //     btn.style.display = 'flex';
-        //     btn.style.width = '60%';
-        //     btn.style.height = '50px'
-        //     btn.style.justifyContent = 'center';
-        //     btn.style.alignItems = 'center';
-        //     btn.innerHTML = questarray[refcount].choices[i];
-        //     questarea.appendChild(btn);
-        // }
-        
-        // questarea.addEventListener("click", choicesFunc);
-        // //const mytimeOut = setTimeout(choicesFunc, 35000);
-    }
-
-    }
-   
-
 //this is starting the timer
 function setTime(){
-    var timerInterval = setInterval(function (){
+    
+    timerInterval = setInterval(function (){
         timercount--;
         timerarea.innerHTML= 'countdown: ' + timercount;
 
         if(timercount == 0){
             clearInterval(timerInterval);
-            for(a =0; a <4; a++){
-                btn.remove();
-            }
-            questarea.removeEventListener("click", choicesFunc);
+            
             questarea.innerHTML = "Game Over";
-            //clearTimeout(mytimeOut,35000);
+            localStorage.setItem("Score", Score);
+            highScoregen();
+            clickTrue = true;
+
+            
         }
     }
 
@@ -219,60 +181,143 @@ function setTime(){
 //call of the timer function
 setTime();
 
-//Success.  Now we need to get this into a for loop and set the
+function gamepop(){
 
-// function choicesFunc(e) {
-    
-    
-    
-//     // displQuest()
-//     var element = e.target.innerHTML;
-//     if(element === questarray[refcount].answer) {  
-//         console.log("correct");
-//         clearTimeout(mytimeOut,35000);
-//     } else {
-//         console.log("incorrect");
-//         clearTimeout(mytimeOut,35000);
-//     }
-//     console.log("ELEMENT: ", element);
-//     refcount++
-// }
+//time to setup the iteration test
+var questamount = 5; //wanted this the length of the array
+var a = 0;
+var thebutnCount = questarray[refcount].choices.length;
+// looping test
+function qgen (){
+  
+    // document.querySelector(".main").innerHTML = "";  //this is a clear all!!!!
+    if (clickTrue === false){
+        clickTrue = true;
+        console.log("test the iterations " +a +questamount);
+        //document.querySelector(".main").innerHTML = "";  //this is a clear all!!!!
+        var quest = questarray[a].question;
+        questarea.innerHTML = quest;
+        
+       
+        for (var i=0; i < thebutnCount; i++) {
+            var btn = document.createElement("button");
+            btn.setAttribute("class", "btn");
+            btn.style.margin = "10px";
+            btn.style.color = textcolor;
+            btn.style.backgroundColor = boxcolor;
+            btn.style.display = 'flex';
+            btn.style.width = '60%';
+            btn.style.height = '50px'
+            btn.style.justifyContent = 'center';
+            btn.style.alignItems = 'center';
+            btn.innerHTML = questarray[refcount].choices[i];
+            questarea.appendChild(btn);
+            console.log("this is the btn for loop " + i);
+            questarea.addEventListener("click", choicesFunc);
 
-// questarea.addEventListener("click", choicesFunc);
 
-// const mytimeOut = setTimeout(choicesFunc, 35000);
+        
+       }
+        
+        
+        function choicesFunc(e) {
+        
 
-//this for loop generates the buttons.  This needs tobe moved into the iterative. Once that is tested.
-    // for (let i = 0; i < questarray[refcount].choices.length; i++) {
-    //     var btn = document.createElement("button");
-    //     btn.setAttribute("class", "btn");
-    //     btn.style.margin = "10px";
-    //     btn.style.color = textcolor;
-    //     btn.style.backgroundColor = boxcolor;
-    //     btn.style.display = 'flex';
-    //     btn.style.width = '60%';
-    //     btn.style.height = '50px'
-    //     btn.style.justifyContent = 'center';
-    //     btn.style.alignItems = 'center';
-    //     btn.innerHTML = questarray[refcount].choices[i];
-    //     questarea.appendChild(btn);
-    // }
-    
-   
-    // function choicesFunc(e) {
-    //     document.querySelector(".main").innerHTML = ""
-    //     refcount++
-    //     // displQuest()
-    //     var element = e.target.innerHTML;
-    //     if(element === questarray[refcount].answer) {
-    //         console.log("correct");
-    //     } else {
-    //         console.log("incorrect")
-    //     }
-    //     console.log("ELEMENT: ", element);
-    // }
-    
-    // questarea.addEventListener("click", choicesFunc);
+            document.querySelector("#quest-section").innerHTML = "";
+            
+            // displQuest()
+            var element = e.target.innerHTML;
+            console.log(questarray[refcount].answer);
+            if(element == questarray[refcount].answer) {  
+                console.log("correct");
+                questarea.innerHTML = "Correct!";
+                Score = Score +1;
+                scorearea.innerHTML = "Score: " + Score;
+                
+
+                //questarea.removeEventListener("click", choicesFunc);
+                //clearTimeout(mytimeOut,35000);
+                clickTrue = false;
+                var myscoreTimeout = setTimeout(qgen, 2000);
+                clearTimeout(myTimeout, 30000);
+                refcount++;
+                for(var x=0; x <4; x++){
+                    btn.remove();
+                }
+                questarea.removeEventListener("click", choicesFunc);
+                a++;
+                  if (a==4){
+                    clearInterval(timerInterval);
+            
+                    questarea.innerHTML = "Game Over";
+                    clickTrue = true;
+                    timercount = timercount;
+                    timerarea.innerHTML = timercount;
+                    localStorage.setItem("Score", Score);
+                    highScoregen();
+                    
+
 }
 
+                
+            } else {
+                console.log("incorrect");
+                questarea.innerHTML = "Sorry, Inorrect!";
+                //questarea.removeEventListener("click", choicesFunc);
+                var myscoreTimeout = setTimeout(qgen, 2000);
+                clearTimeout(myTimeout,30000);
 
+                clickTrue = false;
+                refcount++;
+                for(x =0; x <4; x++){
+                    btn.remove();
+                }
+                questarea.removeEventListener("click", choicesFunc);
+                a++;
+                    if (a==4){
+                    clearInterval(timerInterval);
+            
+                    questarea.innerHTML = "Game Over";
+                    timercount = (timercount-2);
+                    timerarea.innerHTML = timercount;
+                    localStorage.setItem("Score", Score);
+                    highScoregen();
+                    clickTrue = true;
+}
+               
+            }
+            //console.log("ELEMENT: ", element);
+            
+            
+        }
+    console.log("back to if");
+
+    }
+console.log("back to loop a" + a);
+
+    }
+   
+if (a == 0){
+    qgen();
+    myTimeout = setTimeout(qgen(), 0000);
+    
+}
+if (a == 1){
+    myTimeout = setTimeout(qgen(), 0000);
+    console.log("else happened");   
+}
+if (a==4){
+    clearInterval(timerInterval);
+            
+            questarea.innerHTML = "Game Over";
+            timercount = timercount;
+            highScoregen();
+            clickTrue = true;
+
+            //localStorage.setItem("Score", Score);
+}
+
+}
+gamepop();  
+}
+//try settimeout to the eventlistener. you may have to make a function for that.
