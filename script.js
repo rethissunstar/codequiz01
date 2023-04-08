@@ -94,16 +94,47 @@ scorearea.style.alignContent = "center";
 
 scorearea.innerHTML = "Score: " + Score;
 
-function highScoregen(){
+function highScoregen(Score){
     var highScorearea = document.createElement('section');
     highScorearea.setAttribute('id','Scoreboard');
     
     highScorearea.style.fontSize = '20pt';
-    if (hiScore[1].Scorehigh == "0"){
+    if (hiScore[0].Scorehigh == "0"){
         highScorearea.innerHTML = "No High Scores";
     }
-    else {
-        highScorearea.innerHTML = "This is a test";
+    else if (hiScore[0].Scorehigh < Score){
+        highScorearea.innerHTML = "First Place: " + hiScore[0].naMe + "Score: " + Score;
+        localStorage.setItem("HighScore", Score);
+        hiScore[0].naMe = "this is a test You";
+        hiScore[0].Scorehigh = Score;
+        localStorage.setItem("First", hiScore[0].Place);
+        localStorage.setItem("Name", hiScore[0].naMe);
+    }
+    else if (hiScore[1].Scorehigh < Score){
+        highScorearea.innerHTML = "First Place: " + hiScore[1].naMe + "Score: " + Score;
+        localStorage.setItem("HighScore2", Score);
+        hiScore[1].naMe = "2nd you";
+        hiScore[1].Scorehigh = Score;
+        localStorage.setItem("Second", hiScore[1].Place);
+        localStorage.setItem("Name2", hiScore[1].naMe);
+    }
+    else if (hiScore[2].Scorehigh < Score){
+        highScorearea.innerHTML = "First Place: " + hiScore[2].naMe + "Score: " + Score;
+        localStorage.setItem("HighScore3", Score);
+        hiScore[2].naMe = "this is a test You";
+        hiScore[2].Scorehigh = Score;
+        localStorage.setItem("Third", hiScore[2].Place);
+        localStorage.setItem("Name3", hiScore[2].naMe);
+    }
+    else{
+        highScorearea.innerHTML = "Your Score was " + Score;
+        var winnercircle = document.createElement('li');
+        highScorearea.appendChild(winnercircle);
+        boxcreate (tagtarget = "high-scores", '60%', '500px', 'blue','white');
+        winnercircle.innerHTML = "Highest Scores /n" +
+        hiScore[0].naMe + "  " + hiScore[0].Place + "  " + hiScore[0].Scorehigh +"/n" +
+        hiScore[1].naMe + "  " + hiScore[1].Place + "  " + hiScore[1].Scorehigh +"/n" +
+        hiScore[2].naMe + "  " + hiScore[2].Place + "  " + hiScore[2].Scorehigh;
     }
     questarea.appendChild(highScorearea);
     boxcreate(tagtarget = "Scoreboard", '80%', '200px', 'white', 'green');
@@ -254,7 +285,7 @@ function qgen (){
                     timercount = timercount;
                     timerarea.innerHTML = timercount;
                     localStorage.setItem("Score", Score);
-                    highScoregen();
+                    highScoregen(Score);
                     
 
 }
