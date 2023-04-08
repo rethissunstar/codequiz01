@@ -8,7 +8,7 @@ var theboxwidth = '300px';
 var theboxheight = '80px';
 var timercount = 30;
 var clickTrue = false;
-function boxcreate(tagtarget, theboxwidth, theboxheight,boxcolor){
+function boxcreate(tagtarget, theboxwidth, theboxheight,boxcolor, textcolor){
     var headerdiv = document.getElementById(tagtarget);
     headerdiv.style.backgroundColor = boxcolor;
     headerdiv.style.color = textcolor;
@@ -48,7 +48,7 @@ startBtn.addEventListener("click", gamestart);
 
 //the area for the question
 var questarea = document.createElement('section');
-questarea.setAttribute("id", "quest-section")
+questarea.setAttribute("id", "quest-section");
 var para = document.createElement('p');
 var questtext = "this is where a question goes in";
 questarea.innerHTML = questtext;
@@ -63,9 +63,52 @@ questarea.style.width = '100%';
 
 
 
-boxcreate(tagtarget = "quest-section", theboxwidth = '80%', '100px', 'black');
+boxcreate(tagtarget = "quest-section", theboxwidth = '80%', '100px', 'black', 'white');
 
+var scorearea = document.createElement('section');
+var Score = 0;
+var hiScore = [{
+    Place: "First ",
+    naMe: "",
+    Scorehigh: "0"
+},{
+    Place: "Second ",
+    naMe: "",
+    Scorehigh: "0"
+}
+,{
+    Place: "Third ",
+    naMe: "",
+    Scorehigh: "0"
+}
+];
+localStorage.setItem("Score", Score);
+mainEl.appendChild(scorearea);
 
+scorearea.setAttribute('id', "Score");
+scorearea.style.display = 'flex';
+scorearea.style.flex = "wrap";
+scorearea.style.color = "white";
+scorearea.style.justifyContent = "center";
+scorearea.style.alignContent = "center";
+
+scorearea.innerHTML = "Score: " + Score;
+
+function highScoregen(){
+    var highScorearea = document.createElement('section');
+    highScorearea.setAttribute('id','Scoreboard');
+    
+    highScorearea.style.fontSize = '20pt';
+    if (hiScore[1].Scorehigh == "0"){
+        highScorearea.innerHTML = "No High Scores";
+    }
+    else {
+        highScorearea.innerHTML = "This is a test";
+    }
+    questarea.appendChild(highScorearea);
+    boxcreate(tagtarget = "Scoreboard", '80%', '200px', 'white', 'green');
+}
+boxcreate(tagtarget = "Score", '200px', '100px', 'blue');
 
 var refcount = 0;
 var questarray = [
@@ -121,6 +164,10 @@ function setTime(){
             clearInterval(timerInterval);
             
             questarea.innerHTML = "Game Over";
+            localStorage.setItem("Score", Score);
+            highScoregen();
+            clickTrue = true;
+
             
         }
     }
@@ -184,6 +231,10 @@ function qgen (){
             if(element == questarray[refcount].answer) {  
                 console.log("correct");
                 questarea.innerHTML = "Correct!";
+                Score = Score +1;
+                scorearea.innerHTML = "Score: " + Score;
+                
+
                 //questarea.removeEventListener("click", choicesFunc);
                 //clearTimeout(mytimeOut,35000);
                 clickTrue = false;
@@ -195,12 +246,17 @@ function qgen (){
                 }
                 questarea.removeEventListener("click", choicesFunc);
                 a++;
-                  if (a==5){
+                  if (a==4){
                     clearInterval(timerInterval);
             
                     questarea.innerHTML = "Game Over";
+                    clickTrue = true;
                     timercount = timercount;
                     timerarea.innerHTML = timercount;
+                    localStorage.setItem("Score", Score);
+                    highScoregen();
+                    
+
 }
 
                 
@@ -218,12 +274,14 @@ function qgen (){
                 }
                 questarea.removeEventListener("click", choicesFunc);
                 a++;
-                    if (a==5){
+                    if (a==4){
                     clearInterval(timerInterval);
             
                     questarea.innerHTML = "Game Over";
                     timercount = (timercount-2);
                     timerarea.innerHTML = timercount;
+                    localStorage.setItem("Score", Score);
+                    highScoregen();
                     clickTrue = true;
 }
                
@@ -253,6 +311,10 @@ if (a==4){
             
             questarea.innerHTML = "Game Over";
             timercount = timercount;
+            highScoregen();
+            clickTrue = true;
+
+            //localStorage.setItem("Score", Score);
 }
 
 }
